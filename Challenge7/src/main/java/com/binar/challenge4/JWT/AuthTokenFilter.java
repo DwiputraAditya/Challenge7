@@ -31,15 +31,15 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
         final String jwtToken;
-        final String userEmail;
+        final String username;
         if (authHeader == null || !authHeader.startsWith("Bearer ")){
             filterChain.doFilter(request, response);
             return;
         }
         jwtToken = authHeader.substring(7);
-        userEmail = jwtUtils.getUserNameFromJwtToken(jwtToken);
-        if (userEmail !=null && SecurityContextHolder.getContext().getAuthentication() == null){
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+        username = jwtUtils.getUserNameFromJwtToken(jwtToken);
+        if (username !=null && SecurityContextHolder.getContext().getAuthentication() == null){
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
             if (jwtUtils.validateJwtToken(jwtToken)){
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities()
@@ -51,11 +51,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
             }
         }
         filterChain.doFilter(request, response);
-    }
-
-    private String parseJwt(HttpServletRequest request) {
-        String jwt = jwtUtils.getJwtFromCookies(request);
-        return jwt;
     }
 }
 

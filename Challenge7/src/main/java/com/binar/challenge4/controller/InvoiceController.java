@@ -31,7 +31,7 @@ public class InvoiceController {
     }
 
     @GetMapping("/generateInvoice")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public void getInvoiceReport(Long invoiceId) throws Exception{
         response.setContentType("application/pdf");
         response.setHeader("Content-disposition", "attachment; filename=\"invoice.pdf\"");

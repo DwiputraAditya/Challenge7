@@ -1,8 +1,6 @@
 package com.binar.challenge4.service;
 
-import com.binar.challenge4.model.Schedule;
 import com.binar.challenge4.model.Seat;
-import com.binar.challenge4.repository.ScheduleRepository;
 import com.binar.challenge4.repository.SeatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,8 +11,6 @@ import java.util.List;
 public class SeatService {
     @Autowired
     private SeatRepository seatRepository;
-    @Autowired
-    private ScheduleRepository scheduleRepository;
 
     public List<Seat> getAllSeat(){
         return seatRepository.findAll();

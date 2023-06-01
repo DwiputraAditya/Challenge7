@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,6 +45,7 @@ public class FilmService {
         return filmRepository.findFilmByIsPremiered(isPremiered);
     }
 
+    @Transactional
     public Film updateFilm(Long id, Film film) {
         Film film1 = filmRepository.findById(id).get();
         film1.setFilmName(film.getFilmName());
@@ -52,6 +53,7 @@ public class FilmService {
         log.info("Update Data Film By Id Success");
         return filmRepository.save(film1);
     }
+
     public void deleteFilmById(Long id) {
         log.info("Delete Data Film By Id Success");
         filmRepository.deleteById(id);

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +35,7 @@ import java.util.Optional;
             return userRepository.findById(id);
         }
 
+        @Transactional
         public User updateUser(Long id, User user) {
             User user1 = userRepository.findById(id).get();
             user1.setUsername(user.getUsername());

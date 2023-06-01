@@ -15,6 +15,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import javax.sql.*;
+import javax.transaction.Transactional;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.HashMap;
@@ -48,6 +49,7 @@ public class InvoiceService {
         }
     }
 
+
     public JasperPrint generateInvoice(Long parameter) throws Exception{
         InputStream fileReport = new ClassPathResource("report/InvoiceReport.jasper").getInputStream();
         JasperReport jasperReport = (JasperReport) JRLoader.loadObject(fileReport);
@@ -57,6 +59,7 @@ public class InvoiceService {
         return jasperPrint;
     }
 
+    @Transactional
     public Invoice addDataForBooking(Long filmCode, Long scheduleId, Long seatId) throws Exception {
         Film film = filmRepository.findById(filmCode).orElseThrow(() -> new Exception("Film Code Tidak Ada"));
         Schedule schedule = scheduleRepository.findById(scheduleId).orElseThrow(() -> new Exception("Schedule Tidak Ada"));
