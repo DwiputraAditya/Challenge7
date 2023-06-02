@@ -5,6 +5,7 @@ import com.binar.challenge4.repository.SeatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -17,6 +18,7 @@ public class SeatService {
 
     }
 
+    @Transactional
     public Seat addSeats(String seatNumber, boolean isAvailable, String studioName) throws Exception {
         Seat seats = seatRepository.findSeatsBySeatNumberAndStudio(seatNumber, studioName);
         if(seats != null){
