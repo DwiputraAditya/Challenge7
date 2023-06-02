@@ -3,12 +3,15 @@ package com.binar.challenge4.service;
 import com.binar.challenge4.model.Film;
 import com.binar.challenge4.repository.FilmRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.jfree.util.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,9 +43,24 @@ public class FilmService {
         return filmRepository.findById(id);
     }
 
-    public List<Film> getScheduleByFilmIsPremiered(Boolean isPremiered){
+    public List<Film> getFilmByIsPremiered(Boolean isPremiered){
         log.info("Get Data Film By Is Premiered Success");
         return filmRepository.findFilmByIsPremiered(isPremiered);
+    }
+
+    @Scheduled(fixedDelay = 300000)
+    public void filmIsPremieredTrue(){
+        LocalTime currentTime = LocalTime.now();
+        List<Film> films = filmRepository.findFilmByIsPremiered(true);
+
+        if (!films.isEmpty()) {
+            log.info("Film yang sedang tayang: " + " " + currentTime);
+            for (Film film : films) {
+                log.info(film.getFilmName());
+            }
+        } else {
+            log.info("Tidak ada film yang sedang tayang saat ini.");
+        }
     }
 
     @Transactional

@@ -50,7 +50,7 @@ public class FilmController {
 
     @GetMapping("/getFilmByIsPremiered")
     public ResponseEntity<List<Film>> getFilmByIsPremiered(@RequestParam(name = "isPremiered") Boolean isPremiered){
-        List<Film> schedule = filmService.getScheduleByFilmIsPremiered(isPremiered);
+        List<Film> schedule = filmService.getFilmByIsPremiered(isPremiered);
         return ResponseEntity.ok(schedule);
     }
 
