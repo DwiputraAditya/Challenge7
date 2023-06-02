@@ -3,7 +3,6 @@ package com.binar.challenge4.service;
 import com.binar.challenge4.model.Film;
 import com.binar.challenge4.repository.FilmRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.jfree.util.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -49,7 +48,7 @@ public class FilmService {
     }
 
     @Scheduled(fixedDelay = 300000)
-    public void filmIsPremieredTrue(){
+    public void displayFilmIsPremiered(){
         LocalTime currentTime = LocalTime.now();
         List<Film> films = filmRepository.findFilmByIsPremiered(true);
 
